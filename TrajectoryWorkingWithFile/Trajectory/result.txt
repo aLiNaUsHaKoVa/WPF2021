@@ -1,0 +1,6 @@
+Time: 0, Coords: {X=0, Y=0}
+Time: 1, Coords: {X=43.3013, Y=20.095}
+Time: 2, Coords: {X=86.6025, Y=30.38}
+Time: 3, Coords: {X=129.9038, Y=30.855}
+Time: 4, Coords: {X=173.2051, Y=21.52}
+Time: 5, Coords: {X=216.5063, Y=2.375}
