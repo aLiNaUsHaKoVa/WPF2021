@@ -1,0 +1,3 @@
+﻿speed=50
+angle=30
+interval=1
