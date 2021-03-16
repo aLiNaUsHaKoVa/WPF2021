@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trajectory", "Trajectory\Trajectory.csproj", "{82971BBD-FA49-4366-81EA-EB7D60588FBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82971BBD-FA49-4366-81EA-EB7D60588FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82971BBD-FA49-4366-81EA-EB7D60588FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82971BBD-FA49-4366-81EA-EB7D60588FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82971BBD-FA49-4366-81EA-EB7D60588FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0047543B-2D1F-4AA2-8AB1-54276D29214D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0047543B-2D1F-4AA2-8AB1-54276D29214D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0047543B-2D1F-4AA2-8AB1-54276D29214D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0047543B-2D1F-4AA2-8AB1-54276D29214D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E9BABB1-0AE3-436F-AC81-F52A849BB57F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E9BABB1-0AE3-436F-AC81-F52A849BB57F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E9BABB1-0AE3-436F-AC81-F52A849BB57F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E9BABB1-0AE3-436F-AC81-F52A849BB57F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
