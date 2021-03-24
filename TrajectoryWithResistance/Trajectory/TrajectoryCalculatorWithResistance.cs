@@ -1,75 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Numerics;
 
 namespace Trajectory
 {
-    public class TrajectoryCalculatorWithResistance
+    public class TrajectoryCalculatorWithResistance  
     {
-        public float StartSpeed { get; } // TODO Maybe Vector2 ???
+        private const float G = 9.81f;
+
+        public float StartSpeed { get; }
         public float AngleInRad { get; }
         public PointF StartPoint { get; }
         public float ResistanceCoefficient { get; }
         public float Mass { get; }
 
-        private Vector2 StartSpeedVector => new Vector2( //todo use something instead Vector2 ???
-            StartSpeed * (float) Math.Cos(AngleInRad),
-            StartSpeed * (float) Math.Sin(AngleInRad));
-
-        private const float G = 9.81f;
-
-        public TrajectoryCalculatorWithResistance( // TODO create builder or configuration class
+        public TrajectoryCalculatorWithResistance( 
             PointF startPoint, float startSpeed, float angleInDeg, float mass, float resistanceCoefficient)
         {
             StartSpeed = startSpeed;
             AngleInRad = angleInDeg * (float) Math.PI / 180;
             StartPoint = startPoint;
-            ResistanceCoefficient = resistanceCoefficient; // TODO in equation - k(t) ???
+            ResistanceCoefficient = resistanceCoefficient;
             Mass = mass;
         }
 
         public IEnumerable<TrajectoryPoint> GetPoints(float timeIntervalInSeconds)
         {
-            var currentTime = 0.0f;
-            var currentPoint = StartPoint;
-            var currentSpeed = StartSpeedVector;
+            var moveState = new MoveState(
+                StartPoint,
+                MathVector.CreateFromMagnitudeAndAngle(StartSpeed, AngleInRad),
+                0.0f);
 
-            while (true) //TODO refactor
+            while (moveState.Coords.Y != 0 || moveState.Time == 0)
             {
-                yield return new TrajectoryPoint(currentTime, currentPoint);
-
-                currentTime += timeIntervalInSeconds;
-                currentPoint = CalculateNextPoint(
-                    timeIntervalInSeconds, currentPoint, currentSpeed);
-                currentSpeed = CalculateNextSpeed(
-                    currentSpeed, timeIntervalInSeconds);
-
-                if (currentPoint.Y < 0)
-                {
-                    var lastPoint = new PointF(currentPoint.X, 0);
-                    yield return new TrajectoryPoint(currentTime, lastPoint);
-                    yield break;
-                }
+                yield return new TrajectoryPoint(moveState.Time, moveState.Coords);
+                moveState = CalculateNextMoveState(moveState, timeIntervalInSeconds);
             }
+            yield return new TrajectoryPoint(moveState.Time, moveState.Coords);
         }
 
-        private PointF CalculateNextPoint(float dt, PointF currentPoint, Vector2 currentSpeed)
+        private MoveState CalculateNextMoveState(MoveState moveState, float dt)
         {
-            var nextX = currentPoint.X + dt * currentSpeed.X;
-            var nextY = currentPoint.Y + dt * currentSpeed.Y;
+            var nextPoint = CalculateNextPoint(moveState, dt);
+            if (nextPoint.Y < 0)
+                nextPoint.Y = 0;
+            
+            var nextSpeed = CalculateNextSpeed(moveState, dt);
+            var nextTime = moveState.Time + dt;  
+
+            return new MoveState(nextPoint, nextSpeed, nextTime);
+        }
+
+        private PointF CalculateNextPoint(MoveState moveState, float dt)
+        {
+            var nextX = moveState.Coords.X + dt * moveState.Speed.X;
+            var nextY = moveState.Coords.Y + dt * moveState.Speed.Y;
 
             return new PointF(
                 (float) Math.Round(nextX, 4),
-                (float) Math.Round(nextY, 4));
+                (float) Math.Round(nextY, 4));  
         }
 
-        private Vector2 CalculateNextSpeed(Vector2 currentSpeed, float dt)
+        private MathVector CalculateNextSpeed(MoveState moveState, float dt)
         {
-            var nextSpeedX = currentSpeed.X * (1 - dt * ResistanceCoefficient / Mass);
-            var nextSpeedY = currentSpeed.Y - dt * (G + ResistanceCoefficient * currentSpeed.Y / Mass);
+            var windImpact = CalculateWindImpact(moveState.Time);
+            var nextSpeedX = moveState.Speed.X * (1 - dt * windImpact / Mass);
+            var nextSpeedY = moveState.Speed.Y - dt * (G + windImpact * moveState.Speed.Y / Mass);
 
-            return new Vector2(nextSpeedX, nextSpeedY);
+            return new MathVector(nextSpeedX, nextSpeedY);
+        }
+
+        private float CalculateWindImpact(float time)
+        { 
+            return ResistanceCoefficient * time + 0.1f;
         }
     }
 }

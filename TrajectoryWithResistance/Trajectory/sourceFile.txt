@@ -2,4 +2,4 @@
 angle=30
 interval=0.1
 mass=1.2
-k=1
+k=0.4
