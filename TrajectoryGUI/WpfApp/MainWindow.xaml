@@ -1,0 +1,80 @@
+﻿<Window x:Class="WpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp"
+        xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" MinHeight="200" MinWidth="300" Height="500" Width="900">
+    <Grid Background="HotPink">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="20*" />
+            <ColumnDefinition Width="50*" />
+            <ColumnDefinition Width="50*" />
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="13" />
+                <Setter Property="Background" Value="DeepPink" />
+            </Style>
+
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="FontSize" Value="14" />
+            </Style>
+        </Grid.Resources>
+
+        <TextBox Grid.Row="0" Grid.Column="1" Text="0" Name="X0Box" TextWrapping="Wrap" Width="70" />
+        <TextBox Grid.Row="0" Grid.Column="3" Text="1" Name="MassBox" TextWrapping="Wrap" Width="70" />
+        <TextBox Grid.Row="0" Grid.Column="5" Text="10" Name="SpeedBox" TextWrapping="Wrap" Width="70" />
+        <TextBox Grid.Row="0" Grid.Column="6" Text="0.1" Name="TimeBox" TextWrapping="Wrap" Width="70" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="0" Name="Y0Box" TextWrapping="Wrap" Width="70" />
+        <TextBox Grid.Row="1" Grid.Column="3" Text="45" Name="AngleBox" TextWrapping="Wrap" Width="70" />
+        <TextBox Grid.Row="1" Grid.Column="5" Text="1" Name="ResistanceBox" TextWrapping="Wrap" Width="70" />
+
+        <Label Grid.Row="0" Grid.Column="0" Content="x0" />
+        <Label Grid.Row="0" Grid.Column="2" Content="Mass" />
+        <Label Grid.Row="0" Grid.Column="4" Content="Speed" />
+        <Label Grid.Row="1" Grid.Column="0" Content="y0" />
+        <Label Grid.Row="1" Grid.Column="2" Content="Angle" />
+        <Label Grid.Row="1" Grid.Column="4" Content="k" />
+
+        <Label Grid.Row="2" Grid.Column="1" Name="MaxHeightLabel" HorizontalAlignment="Left"
+               ContentStringFormat="Max flight height: {0}" />
+        <Label Grid.Row="2" Grid.Column="3" Name="DistanceLabel" HorizontalAlignment="Left"
+               ContentStringFormat="Distance: {0}" />
+        <Label Grid.Row="2" Grid.Column="5" Name="FlightTimeLabel" HorizontalAlignment="Left"
+               ContentStringFormat="Flight time: {0} s" />
+
+        <Button Grid.Row="1" Grid.Column="6" Name="ThrowButton" FontSize="14"
+                Content="Throw" Click="ThrowButton_OnClick" Background="MediumPurple" />
+
+        <oxy:Plot Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="7" Name="TrajectoryPlot" 
+                  Title="Trajectory" Background="Pink">
+            <oxy:Plot.Axes>
+                <oxy:LinearAxis Name="XAxis" Minimum="-0.07" Position="Bottom"
+                                Key="Horizontal" IsZoomEnabled="False" IsPanEnabled="False" />
+                <oxy:LinearAxis Name="YAxis" Minimum="-0.07" Position="Left"
+                                Key="Vertical" IsZoomEnabled="False" IsPanEnabled="False" />
+            </oxy:Plot.Axes>
+            <oxy:Plot.Series>
+                <oxy:LineSeries Name="LineSeries" MarkerType="Circle" XAxisKey="Horizontal" YAxisKey="Vertical" 
+                                Color="MediumPurple" />
+            </oxy:Plot.Series>
+        </oxy:Plot>
+
+    </Grid>
+</Window>
