@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace TrajectoryClasses
 {
-    public class TrajectoryCalculator  // TODO add interface
+    public class TrajectoryCalculator
     {
         private const float G = 9.81f;
 
@@ -14,7 +14,7 @@ namespace TrajectoryClasses
         public float ResistanceCoefficient { get; }
         public float Mass { get; }
 
-        public TrajectoryCalculator( // TODO create builder or configuration class
+        public TrajectoryCalculator(
             PointF startPoint, float startSpeed, float angleInDeg, float mass, float resistanceCoefficient)
         {
             StartSpeed = startSpeed;
@@ -52,7 +52,7 @@ namespace TrajectoryClasses
                 nextPoint.Y = 0;
             
             var nextSpeed = CalculateNextSpeed(moveState, dt);
-            var nextTime = moveState.TimeInSeconds + dt;  // TODO round time or add function in MoveState for this
+            var nextTime = moveState.TimeInSeconds + dt;
 
             return new MoveState(nextPoint, nextSpeed, nextTime);
         }
@@ -64,7 +64,7 @@ namespace TrajectoryClasses
 
             return new PointF(
                 (float) Math.Round(nextX, 4),
-                (float) Math.Round(nextY, 4));  // TODO move rounding functions to MoveState?
+                (float) Math.Round(nextY, 4));
         }
 
         private MathVector CalculateNextSpeed(MoveState moveState, float dt)
